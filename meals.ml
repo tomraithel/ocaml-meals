@@ -2,7 +2,7 @@ open Soup;;
 open Core.Std;;
 open Cohttp_lwt_unix;;
 
-(* Client.get (Uri.of_string "http://www.reddit.com/") *)
+(* Client.get (Uri.of_string "https://meals.aoe.com/");; *)
 
 (* TODO: why does String.trim not work? *)
 let rec trim s =

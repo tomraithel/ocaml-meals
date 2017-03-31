@@ -1,5 +1,7 @@
+
 ```
-$ opam install lambdasoup cohttp lwt js_of_ocaml
+brew install gmp
+$ opam install lambdasoup cohttp lwt js_of_ocaml tls
 ```
 
 ~/.ocamlinit
