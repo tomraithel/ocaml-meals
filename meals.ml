@@ -1,6 +1,10 @@
 open Soup;;
 open Core.Std;;
+open Cohttp_lwt_unix;;
 
+(* Client.get (Uri.of_string "http://www.reddit.com/") *)
+
+(* TODO: why does String.trim not work? *)
 let rec trim s =
   let l = String.length s in
   if l=0 then s

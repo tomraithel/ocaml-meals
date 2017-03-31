@@ -1,5 +1,17 @@
 ```
-ocamlfind ocamlc -linkpkg -thread -package lambdasoup -package core meals.ml -o meals.byte && ./meals.byte
+$ opam install lambdasoup cohttp lwt js_of_ocaml
+```
+
+~/.ocamlinit
+
+```
+#use "topfind";;
+#thread;;
+#camlp4o;;
+#require "cohttp";;
+#require "cohttp.lwt";;
+#require "core.top";;
+#require "core.syntax";;
 ```
 
 
