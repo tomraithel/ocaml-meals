@@ -4,9 +4,8 @@ open Lwt
 open Cohttp
 open Cohttp_lwt_unix
 
-let body =
+let fetch_html =
   Client.get (Uri.of_string "https://meals.aoe.com/") >>= fun (resp, body) ->
-  let code = resp |> Response.status |> Code.code_of_status in
   body |> Cohttp_lwt_body.to_string >|= fun body ->
   body
 ;;
@@ -64,5 +63,5 @@ let render menu =
 
 
 let () =
-  let body = Lwt_main.run body in
-  print_endline (render (get_menu body))
+  let body = Lwt_main.run fetch_html in
+  get_menu body |> render |> print_endline
