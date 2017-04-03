@@ -1,5 +1,3 @@
-(* ocamlfind ocamlc -linkpkg -thread -package lambdasoup -package core -package cohttp -package lwt -package cohttp.lwt coclient.ml -o coclient.byte && ./coclient.byte *)
-
 open Lwt
 open Cohttp
 open Cohttp_lwt_unix

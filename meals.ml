@@ -1,8 +1,15 @@
-open Soup;;
-open Core.Std;;
-open Cohttp_lwt_unix;;
+open Soup
+open Core.Std
+open Lwt
+open Cohttp
+open Cohttp_lwt_unix
 
-(* Client.get (Uri.of_string "https://meals.aoe.com/");; *)
+let body =
+  Client.get (Uri.of_string "https://meals.aoe.com/") >>= fun (resp, body) ->
+  let code = resp |> Response.status |> Code.code_of_status in
+  body |> Cohttp_lwt_body.to_string >|= fun body ->
+  body
+;;
 
 (* TODO: why does String.trim not work? *)
 let rec trim s =
@@ -43,8 +50,8 @@ let get_day meal =
   )
 ;;
 
-let get_menu filename =
-  let soup = read_file filename |> parse in
+let get_menu body =
+  let soup = body |> parse in
   let meals_list = to_list (get_meals soup) in
   List.map ~f:get_day meals_list
 ;;
@@ -55,4 +62,7 @@ let render menu =
   String.concat ~sep:"\n-------\n" (List.map ~f:(fun (day, titles) -> day ^ (render_titles titles)) menu)
 ;;
 
-print_endline (render (get_menu "./index.html"));;
+
+let () =
+  let body = Lwt_main.run body in
+  print_endline (render (get_menu body))
