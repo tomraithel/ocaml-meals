@@ -10,22 +10,10 @@ let fetch_html =
   body
 ;;
 
-(* TODO: why does String.trim not work? *)
-let rec trim s =
-  let l = String.length s in
-  if l=0 then s
-  else if s.[0]=' ' || s.[0]='\t' || s.[0]='\n' || s.[0]='\r' then
-    trim (String.sub s 1 (l-1))
-  else if s.[l-1]=' ' || s.[l-1]='\t' || s.[l-1]='\n' || s.[l-1]='\r' then
-    trim (String.sub s 0 (l-1))
-  else
-    s
-;;
-
 let trimmed_leaf_text node =
   node
   |> R.leaf_text
-  |> trim
+  |> String.strip
 ;;
 
 let get_meals soup =

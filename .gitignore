@@ -1,1 +1,12 @@
 _build
+*.annot
+*.cmo
+*.cma
+*.cmi
+*.a
+*.o
+*.cmx
+*.cmxs
+*.cmxa
+*snippets.ml
+*.zip
