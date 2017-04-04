@@ -21,7 +21,7 @@ let trimmed_leaf_text node =
 ;;
 
 let get_meals soup =
-  soup $$ ".week:first-child .meal"
+  soup $$ ".week:first-child .meal" |> to_list
 ;;
 
 let get_meal_titles meal =
@@ -43,11 +43,13 @@ let get_day meal =
 ;;
 
 let get_menu body =
-  body
+  let l = body
     |> parse
     |> get_meals
-    |> to_list
-    |> List.map ~f:get_day
+    |> List.map ~f:get_day in
+  match l with
+    | [] -> None
+    | _ -> Some(l)
 ;;
 
 let () =

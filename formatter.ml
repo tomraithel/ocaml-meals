@@ -15,7 +15,10 @@ let render_entry (day, titles) =
 ;;
 
 let render_menu menu =
-  menu
-    |> List.map ~f:render_entry
-    |> String.concat ~sep:"----------------------------------------\n"
+  match menu with
+    | None -> "❌  Leider kein Essen für diese Woche hinterlegt."
+    | Some m ->
+      m
+        |> List.map ~f:render_entry
+        |> String.concat ~sep:"----------------------------------------\n"
 ;;
