@@ -3,6 +3,7 @@ open Core.Std
 open Lwt
 open Cohttp
 open Cohttp_lwt_unix
+open Formatter
 
 let fetch_html =
   Client.get (Uri.of_string "https://meals.aoe.com/") >>=
@@ -48,12 +49,8 @@ let get_menu body =
     |> List.map ~f:get_day
 ;;
 
-let render_titles titles = String.concat ~sep:"\n - " titles;;
-
-let render menu =
-  String.concat ~sep:"\n-------\n" (List.map ~f:(fun (day, titles) -> day ^ (render_titles titles)) menu)
-;;
-
 let () =
   let body = Lwt_main.run fetch_html in
-  get_menu body |> render |> print_endline
+  get_menu body
+    |> render_menu
+    |> print_endline
