@@ -6,7 +6,8 @@ open Cohttp_lwt_unix
 open Formatter
 
 let fetch_html =
-  Client.get (Uri.of_string "https://meals.aoe.com/") >>=
+  let headers = Header.of_list ["Accept-Language", "de-DE"] in
+  Client.get (Uri.of_string "https://meals.aoe.com/") ~headers >>=
     fun (resp, body) ->
       body
         |> Cohttp_lwt_body.to_string >|= fun body ->
@@ -20,7 +21,7 @@ let trimmed_leaf_text node =
 ;;
 
 let get_meals soup =
-  soup $$ ".meal"
+  soup $$ ".week:first-child .meal"
 ;;
 
 let get_meal_titles meal =
