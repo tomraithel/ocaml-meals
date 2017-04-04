@@ -4,16 +4,7 @@ open Lwt
 open Cohttp
 open Cohttp_lwt_unix
 open Formatter
-
-type meal = {
-  day : string;
-  titles: string list
-};;
-
-type menu = {
-  week : string;
-  meals : meal list
-};;
+open Menu
 
 let fetch_html =
   let headers = Header.of_list ["Accept-Language", "de-DE"] in

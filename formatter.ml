@@ -1,14 +1,5 @@
 open Core.Std
-
-type meal = {
-  day : string;
-  titles: string list
-};;
-
-type menu = {
-  week : string;
-  meals : meal list
-};;
+open Menu
 
 let render_title title =
   "- " ^ title ^ "\n"
@@ -20,15 +11,15 @@ let render_titles titles =
     |> String.concat
 ;;
 
-let render_entry (day, titles) =
+let render_meal {day; titles} =
   "🍲  " ^ day ^ ": \n" ^ (render_titles titles)
 ;;
 
 let render_menu menu =
   match menu with
     | None -> "❌  Leider kein Essen für diese Woche hinterlegt."
-    | Some m -> m.week
-      (* m
-        |> List.map ~f:render_entry
-        |> String.concat ~sep:"----------------------------------------\n" *)
+    | Some m ->
+      m.meals
+        |> List.map ~f:render_meal
+        |> String.concat ~sep:"----------------------------------------\n"
 ;;
