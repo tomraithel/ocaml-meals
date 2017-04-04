@@ -40,13 +40,21 @@ let get_day meal =
   }
 ;;
 
+let get_week soup =
+  soup $ ".week:first-child .sub"
+    |> trimmed_leaf_text
+    |> String.split ~on:'\n'
+    |> List.map ~f:String.strip
+    |> String.concat ~sep:" "
+;;
+
 let get_meals soup =
   let l = soup $$ ".week:first-child .meal"
     |> to_list
     |> List.map ~f:get_day in
   match l with
     | [] -> None
-    | _ -> Some({ week = "foo"; meals = l })
+    | _ -> Some({ week = get_week soup; meals = l })
 ;;
 
 let get_menu body =
