@@ -16,4 +16,4 @@ let command =
       fun is_next () -> Meals.print_meal is_next
     )
 
-let () = Command.run ~version:"1.0" ~build_info:"Made with ❤️  by @tomraithel" command
+let () = Command.run ~version:"1.0.0" ~build_info:"Made with ❤️  by @tomraithel" command
