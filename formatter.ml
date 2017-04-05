@@ -6,9 +6,12 @@ let render_title title =
 ;;
 
 let render_titles titles =
-  titles
-    |> List.map ~f:render_title
-    |> String.concat
+  match titles with
+  | [] -> render_title "😖  Leider nichts"
+  | titles ->
+    titles
+      |> List.map ~f:render_title
+      |> String.concat
 ;;
 
 let render_meal {day; titles} =

@@ -40,31 +40,40 @@ let get_day meal =
   }
 ;;
 
-let get_week soup =
-  soup $ ".week:first-child .sub"
+let get_week is_next soup =
+  let selector = match is_next with
+    | false -> ".week:first-child .sub"
+    | true -> ".week:last-child .sub"
+  in
+  soup $ selector
     |> trimmed_leaf_text
     |> String.split ~on:'\n'
     |> List.map ~f:String.strip
     |> String.concat ~sep:" "
 ;;
 
-let get_meals soup =
-  let l = soup $$ ".week:first-child .meal"
+let get_meals is_next soup =
+  let selector = match is_next with
+    | false -> ".week:first-child .meal"
+    | true -> ".week:last-child .meal"
+  in
+  let l = soup $$ selector
     |> to_list
-    |> List.map ~f:get_day in
+    |> List.map ~f:get_day
+  in
   match l with
     | [] -> None
-    | _ -> Some({ week = get_week soup; meals = l })
+    | _ -> Some({ week = get_week is_next soup; meals = l })
 ;;
 
-let get_menu body =
+let get_menu is_next body =
   body
     |> parse
-    |> get_meals
+    |> get_meals is_next
 ;;
 
-let () =
+let print_meal is_next =
   let body = Lwt_main.run fetch_html in
-  get_menu body
+  get_menu is_next body
     |> render_menu
     |> print_endline
