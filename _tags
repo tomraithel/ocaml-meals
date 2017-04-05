@@ -1,0 +1,2 @@
+true: package(lambdasoup), package(core), package(cohttp), package(lwt), package(cohttp.lwt)
+true: thread
